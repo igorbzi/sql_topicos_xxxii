@@ -15,62 +15,61 @@ CREATE TABLE habilitacoes(
 );
 
 CREATE TABLE veiculos(
-  matricula numeric(11) not null, 
+  matricula serial not null, 
   nome varchar(30) not null, 
   modelo varchar(50) not null, 
-  comprimento int not null, 
+  comprimento numeric(10,2) not null, 
   potMotor int not null,
-  vlDiaria int not null, 
+  vlDiaria numeric(10,2) not null, 
   codTipo int not null,
   PRIMARY KEY(matricula),
-  FOREIGN KEY codTipo REFERENCES TiposVeiculos
+  FOREIGN KEY (codTipo) REFERENCES tipos_veiculos
 );
 
 CREATE TABLE funcionarios(
-  codF int not null, 
+  codF serial not null, 
   nome varchar(100) not null, 
-  telefone numeric(10) not null, 
+  telefone varchar(15) not null, 
   endereco varchar(100) not null, 
   idade smallint not null, 
-  salario int not null,
+  salario numeric(10,2) not null,
   PRIMARY KEY(codF)
 );
 
 CREATE TABLE veiculos_habilitacoes(
   codTipo int not null,
   codH int not null,
-  FOREIGN KEY codTipo REFERENCES tipos_veiculos,
-  FOREIGN KEY codH REFERENCES habilitacoes
+  FOREIGN KEY (codTipo) REFERENCES tipos_veiculos,
+  FOREIGN KEY (codH) REFERENCES habilitacoes
 );
 
 CREATE TABLE clientes(
-  CPF numeric(11) not null, 
+  CPF varchar(11) not null, 
   nome varchar(50) not null, 
   endereco varchar(100) not null, 
   estado_civil varchar(20), 
   num_filhos int,
   data_nasc date not null, 
-  telefone numeric(10) not null,
+  telefone varchar(15) not null,
   codH int not null,
   PRIMARY KEY(CPF), 
-  FOREIGN KEY codH REFERENCES habilitacoes
+  FOREIGN KEY (codH) REFERENCES habilitacoes
 );
 
 CREATE TABLE locacoes(
-  codLoc int not null,
-  valor int not null, 
+  codLoc serial not null,
+  valor numeric(10,2) not null, 
   inicio date not null, 
   fim date, 
   obs varchar(150) not null, 
-  matricula numeric(11) not null,
+  matricula int not null,
   codF int not null,
-  CPF numeric(11) not null,
-  FOREIGN KEY matricula REFERENCES veiculos, 
-  FOREIGN KEY codF REFERENCES funcionarios, 
-  FOREIGN KEY CPF REFERENCES clientes,
+  CPF varchar(11) not null,
+  FOREIGN KEY (matricula) REFERENCES veiculos, 
+  FOREIGN KEY (codF) REFERENCES funcionarios, 
+  FOREIGN KEY (CPF) REFERENCES clientes,
 
   constraint DatasCoerentes check(fim >= inicio or fim is null);
-  constraint CarroDisponivel check(matricula not in (select matricula from locacoes where fim is null))
 );
 
 END;
