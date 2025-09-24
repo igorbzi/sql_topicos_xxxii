@@ -19,7 +19,7 @@ CREATE TABLE veiculos(
   nome varchar(30) not null, 
   modelo varchar(50) not null, 
   comprimento numeric(10,2) not null, 
-  potMotor int not null,
+  potMotor numeric(10,2) not null,
   vlDiaria numeric(10,2) not null, 
   codTipo int not null,
   PRIMARY KEY(matricula),
