@@ -30,7 +30,7 @@ CREATE TABLE funcionarios(
   codF serial not null, 
   nome varchar(100) not null, 
   telefone varchar(15) not null, 
-  endereco varchar(100) not null, 
+  endereco varchar(150) not null, 
   idade smallint not null, 
   salario numeric(10,2) not null,
   PRIMARY KEY(codF)
@@ -46,7 +46,7 @@ CREATE TABLE veiculos_habilitacoes(
 CREATE TABLE clientes(
   CPF varchar(11) not null, 
   nome varchar(50) not null, 
-  endereco varchar(100) not null, 
+  endereco varchar(150) not null, 
   estado_civil varchar(20), 
   num_filhos int,
   data_nasc date not null, 
@@ -69,7 +69,7 @@ CREATE TABLE locacoes(
   FOREIGN KEY (codF) REFERENCES funcionarios, 
   FOREIGN KEY (CPF) REFERENCES clientes,
 
-  constraint DatasCoerentes check(fim >= inicio or fim is null);
+  constraint DatasCoerentes check(fim >= inicio or fim is null)
 );
 
 END;
